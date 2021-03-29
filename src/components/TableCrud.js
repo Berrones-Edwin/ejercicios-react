@@ -1,11 +1,11 @@
 import React from "react";
 import TableRowCrud from "./TableRowCrud";
 
-export default function TableCrud({ data }) {
+export default function TableCrud({ data, setDataToEdit, deleteData }) {
     return (
         <div>
             <h3>Table</h3>
-            <table> 
+            <table>
                 <thead>
                     <tr>
                         <td>Name</td>
@@ -22,8 +22,9 @@ export default function TableCrud({ data }) {
                         data.map((el) => (
                             <TableRowCrud
                                 key={el.id}
-                                name={el.name}
-                                constellation={el.constellation}
+                                el={el}
+                                setDataToEdit={setDataToEdit}
+                                deleteData={deleteData}
                             />
                         ))
                     )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const initialForm = {
     name: "",
@@ -9,18 +9,15 @@ export default function FormCrud({
     addData,
     editData,
     dataToEdit,
-    setdataToEdit,
+    setDataToEdit,
 }) {
     const [form, setForm] = useState(initialForm);
-    const handleSubmit = (e) => {
-        e.preventDefault();
 
-        if (dataToEdit === null) addData(form);
-        else editData(form);
+    useEffect(() => {
+        if (dataToEdit) setForm(dataToEdit);
+        else setForm(initialForm);
+    }, [dataToEdit]);
 
-        handleReset();
-
-    };
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -29,33 +26,51 @@ export default function FormCrud({
     };
     const handleReset = (e) => {
         setForm(initialForm);
-        setdataToEdit(null);
+        setDataToEdit(null);
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!form.name || !form.constellation) {
+            alert("datos incompletos");
+            return;
+        }
+
+        if (form.id === null) addData(form);
+        else editData(form);
+
+        handleReset();
+    };
+
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type=" text"
-                name="name"
-                placeholder="enter the name"
-                value={form.name}
-                autoComplete="off"
-                onChange={handleChange}
-            />
-            <input
-                type=" text"
-                name="constellation"
-                placeholder="enter the constellation"
-                value={form.constellation}
-                autoComplete="off"
-                onChange={handleChange}
-            />
-            <input
-                type="reset"
-                value="reset"
-                onClick={handleReset}
-                name="BTNreset"
-            />
-            <input type="submit" value="submit" name="BTNSubmit" />
-        </form>
+        <>
+            <h3>{dataToEdit ? "Editar" : "Agregar"}</h3>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type=" text"
+                    name="name"
+                    placeholder="enter the name"
+                    value={form.name}
+                    autoComplete="off"
+                    onChange={handleChange}
+                />
+                <input
+                    type=" text"
+                    name="constellation"
+                    placeholder="enter the constellation"
+                    value={form.constellation}
+                    autoComplete="off"
+                    onChange={handleChange}
+                />
+                <input
+                    type="reset"
+                    value="reset"
+                    onClick={handleReset}
+                    name="BTNreset"
+                />
+                <input type="submit" value="submit" name="BTNSubmit" />
+            </form>
+        </>
     );
 }

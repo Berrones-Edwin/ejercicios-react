@@ -31,14 +31,15 @@ const initailData = [
 ];
 export default function CrudApp() {
     const [DB, setDB] = useState(initailData);
-    const [dataToEdit, setdataToEdit] = useState(null);
+    const [dataToEdit, setDataToEdit] = useState(null);
     const addData = (data) => {
         data.id = Date.now();
         setDB([...DB, data]);
-
-        // console.log(data);
     };
-    const editData = (data) => {};
+    const editData = (data) => {
+        let updatedDate = DB.map((el) => (el.id === data.id ? data : el));
+        setDB(updatedDate)
+    };
     const deleteData = (id) => {};
     return (
         <>
@@ -46,9 +47,13 @@ export default function CrudApp() {
                 addData={addData}
                 editData={editData}
                 dataToEdit={dataToEdit}
-                setdataToEdit={setdataToEdit}
+                setDataToEdit={setDataToEdit}
             />
-            <TableCrud data={DB} />
+            <TableCrud
+                data={DB}
+                setDataToEdit={setDataToEdit}
+                deleteData={deleteData}
+            />
         </>
     );
 }
