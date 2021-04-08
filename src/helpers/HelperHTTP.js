@@ -1,3 +1,4 @@
+// https://gist.github.com/jonmircha/19a43c5714a398830d6834084f253a0a
 export const HelperHTTP = () => {
     const customFetch = (endpoint, options) => {
         const defaultHeader = {
@@ -46,5 +47,12 @@ export const HelperHTTP = () => {
     const del = (url, options = {}) => {
         options.method = "DELETE";
         return customFetch(url, options);
+    };
+
+    return {
+        get,
+        post,
+        put,
+        del,
     };
 };
