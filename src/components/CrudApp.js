@@ -40,7 +40,11 @@ export default function CrudApp() {
         let updatedDate = DB.map((el) => (el.id === data.id ? data : el));
         setDB(updatedDate)
     };
-    const deleteData = (id) => {};
+    const deleteData = (id) => {
+        
+        let deleteData = DB.filter((el) => (el.id !==id));
+        setDB(deleteData)
+    };
     return (
         <>
             <FormCrud
