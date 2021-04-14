@@ -11,14 +11,41 @@ export default function CrudAPI() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    let url = "http://localhost:5000/datas";
-    // let api = HelperHTTP();
+    let url = "http://localhost:5000/data";
+    let api = HelperHTTP();
 
     useEffect(() => {
         setLoading(true);
-        HelperHTTP().get(url).then((data) => {
+        HelperHTTP()
+            .get(url)
+            .then((data) => {
+                if (!data.err) {
+                    setDB(data);
+                    setError(null);
+                } else {
+                    setDB(null);
+                    setError(data);
+                }
+
+                setLoading(false);
+            });
+    }, [url]);
+
+    const addData = (data) => {
+        setLoading(true);
+        data.id = Date.now();
+        const options = {
+            body: {
+                ...data,
+            },
+            headers: {
+                "content-type": "application/json",
+            },
+        };
+
+        api.post(url, options).then((data) => {
             if (!data.err) {
-                setDB(data);
+                setDB([...DB, data]);
                 setError(null);
             } else {
                 setDB(null);
@@ -27,19 +54,53 @@ export default function CrudAPI() {
 
             setLoading(false);
         });
-    }, [url]);
-
-    const addData = (data) => {
-        data.id = Date.now();
-        setDB([...DB, data]);
     };
     const editData = (data) => {
-        let updatedDate = DB.map((el) => (el.id === data.id ? data : el));
-        setDB(updatedDate);
+        setLoading(true);
+        const options = {
+            body: {
+                ...data,
+            },
+            headers: {
+                "content-type": "application/json",
+            },
+        };
+
+        api.put(`${url}/${data.id}`, options).then((data) => {
+            if (!data.err) {
+                let updatedDate = DB.map((el) =>
+                    el.id === data.id ? data : el
+                );
+                setDB(updatedDate);
+                setError(null);
+            } else {
+                setDB(null);
+                setError(data);
+            }
+
+            setLoading(false);
+        });
     };
     const deleteData = (id) => {
-        let deleteData = DB.filter((el) => (el.id !==id));
-        setDB(deleteData)
+        setLoading(true);
+        const options = {
+            headers: {
+                "content-type": "application/json",
+            },
+        };
+
+        api.del(`${url}/${id}`, options).then((data) => {
+            if (!data.err) {
+                let deleteData = DB.filter((el) => el.id !== id);
+                setDB(deleteData);
+                setError(null);
+            } else {
+                setDB(null);
+                setError(data);
+            }
+
+            setLoading(false);
+        });
     };
     return (
         <>

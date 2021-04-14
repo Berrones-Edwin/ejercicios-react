@@ -14,11 +14,7 @@ export default function TableCrud({ data, setDataToEdit, deleteData }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.length === 0 ? (
-                        <tr>
-                            <td colSpan="3">Not data</td>
-                        </tr>
-                    ) : (
+                    {data.length > 0 ? (
                         data.map((el) => (
                             <TableRowCrud
                                 key={el.id}
@@ -27,6 +23,10 @@ export default function TableCrud({ data, setDataToEdit, deleteData }) {
                                 deleteData={deleteData}
                             />
                         ))
+                    ) : (
+                        <tr>
+                            <td colSpan="3">Not data</td>
+                        </tr>
                     )}
                 </tbody>
             </table>
