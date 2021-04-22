@@ -38,7 +38,6 @@ const SongSearch = () => {
     }, [search]);
 
     const handleSearch = (data) => {
-        console.log(data);
         setSearch(data);
     };
 

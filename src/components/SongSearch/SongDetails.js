@@ -9,22 +9,21 @@ const SongDetails = ({ search, lyrics, bio }) => {
     const { artist, song } = search;
     return (
         <>
-            {bio.artists ? (
-                <SongArtist />
-            ) : (
-                <Message
-                    msg={`Error: The artist ${artist} does not exist`}
-                    bgColor="#dc4535"
-                />
-            )}
-
             {lyrics.error || lyrics.err || lyrics.name === "AbortController" ? (
                 <Message
                     msg={`Error: The song ${song} does not exist`}
                     bgColor="#dc4535"
                 />
             ) : (
-                <SongLyrics />
+                <SongLyrics title={song} lyrics={lyrics.lyrics} />
+            )}
+            {bio.artists ? (
+                <SongArtist artist={bio.artists[0]} />
+            ) : (
+                <Message
+                    msg={`Error: The artist ${artist} does not exist`}
+                    bgColor="#dc4535"
+                />
             )}
         </>
     );

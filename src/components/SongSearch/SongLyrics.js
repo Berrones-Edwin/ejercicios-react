@@ -1,9 +1,10 @@
 import React from "react";
 
-const SongLyrics = () => {
+const SongLyrics = ({ title, lyrics }) => {
     return (
         <div>
-            <h3>Lyrics</h3>
+            <h3>{title}</h3>
+            <blockquote >{lyrics}</blockquote>
         </div>
     );
 };
