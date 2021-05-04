@@ -100,6 +100,11 @@ td {
   border-bottom: thin solid #dedede;
 }
 
+textarea{
+  font-family: inherit;
+  resize: none;
+}
+
 @media screen and (min-width: 1024px) {
   .grid-1-2 {
     display: grid;
