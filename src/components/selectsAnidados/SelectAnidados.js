@@ -4,7 +4,7 @@ import SelectList from "./SelectList";
 const SelectAnidados = () => {
     const [state, setState] = useState("");
     const [town, setTown] = useState("");
-    const [suburb, setSuburb] = useState("");
+    const [, setSuburb] = useState("");
     const TOKEN = "d81a7ac7-976d-4e1e-b7d3-b1979d791b6c";
     const URLAPI = "https://api-sepomex.hckdrk.mx/query/";
     return (

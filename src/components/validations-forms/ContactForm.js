@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "../../hooks/useForm";
+import Loader from "../Loader";
+import Message from "../Message";
 
 const initialForm = {
     name: "",
@@ -100,8 +102,11 @@ const ContactForm = () => {
                 {errors.comments && (
                     <p style={errorMessage}>{errors.comments}</p>
                 )}
-                <input type="submit" value="send" />
+                <button type="submit">Send data</button>
             </form>
+            
+            { loading && <Loader /> }
+            { response && <Message msg="Data send successfully" bgColor="#198754" /> }
         </>
     );
 };
